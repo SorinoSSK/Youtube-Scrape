@@ -96,7 +96,7 @@ def log_failed_video(video_url, data, log_file="failed_downloads.txt"):
 
 def sanitise_filename(filename):
     # Remove invalid characters for Windows filenames: \ / : * ? " < > |
-    return re.sub(r'[\\/:*?"<>|]', '_', filename)
+    return re.sub(r'[\\/:*?"<>|.]', '_', filename)
 
 # Function to process the videos in the file
 def process_videos(file_path):
@@ -117,7 +117,7 @@ def process_videos(file_path):
                 elif not "contributing_artist" in data:
                     data["contributing_artist"] = line
                 else:
-                    current_output_folder = line
+                    current_output_folder = sanitise_filename(line)
                     os.makedirs(os.path.join(root_dir, current_output_folder), exist_ok=True)
                     print(f"Created folder: {current_output_folder}")
 
